@@ -22,9 +22,16 @@ Rectangle {
         }
     }
     // Connect PizzaBuilder C++ class to livePizzaImage source reset
+    Connections {
+        target: PizzaBuilder
+        onUpdateLivePizza: {
+            //livePizzaImage.source = "image://live/tomatoes"
+        }
+    }
+
     Image{
         id:livePizzaImage
-        source:""
+        source: ""
         asynchronous: true
         cache:false
         anchors.verticalCenter: parent.verticalCenter
@@ -47,7 +54,12 @@ Rectangle {
             listData.append({"name":"Anchovies"})
             listData.append({"name":"Tomatoes"})
             listData.append({"name":"Pineapple"})
-            listData.append({"name":"You Choice"})
+            listData.append({"name":"Your Choice"})
+        }
+        onClickedItem: {
+            PizzaBuilder.chooseTopping(listData.get(index).name)
+            chosenContainer.listData.append({"name" : listData.get(index).name})
+            listData.remove(index)
         }
     }
 
@@ -62,15 +74,19 @@ Rectangle {
         radius:4
         titleText:"Chosen Toppings"
         onClickedItem: {
-            console.log("Clicked ", listData.get(index).name);
+            PizzaBuilder.removeTopping(listData.get(index).name)
+            availableContainer.listData.append({"name" : listData.get(index).name})
+            listData.remove(index)
         }
 
         Component.onCompleted: {
             listData.append({"name":"Pepperoni"})
+            PizzaBuilder.chooseTopping("Pepperoni")
         }
     }
+
     Component.onCompleted: {
-        livePizzaImage.source = "image://live/pizza"; // Request the pixmap on load
+        livePizzaImage.source = "image://live/fish"; // Request the pixmap on load
     }
 
 }

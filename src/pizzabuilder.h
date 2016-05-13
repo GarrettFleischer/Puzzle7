@@ -12,9 +12,11 @@ public:
 
 signals:
     void updateLivePizza();
+
 public slots:
    void chooseTopping(QString topping);
    void removeTopping(QString topping);
+
 private:
     PizzaProvider * mPizzaProvider;
 };

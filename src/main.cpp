@@ -17,9 +17,8 @@ int main(int argc, char *argv[])
 	* builder. I hope this PizzaProvider and PizzaBuilder object help
 	* you build what corporate is looking for. If not start packing.
 	*********************************************************************/
-	
-    // uncomment this line to connect the PizzaBuilder
-   // engine.rootContext()->setContextProperty("PizzaBuilder", &builder);
+
+    engine.rootContext()->setContextProperty("PizzaBuilder", &builder);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

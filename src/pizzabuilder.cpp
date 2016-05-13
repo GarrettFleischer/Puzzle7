@@ -2,7 +2,7 @@
 #include "pizzaprovider.h"
 PizzaBuilder::PizzaBuilder(PizzaProvider *provider, QObject *parent) : QObject(parent), mPizzaProvider(provider)
 {
-    connect(mPizzaProvider, &PizzaProvider::readyForUpdate, this, PizzaBuilder::updateLivePizza);
+    connect(mPizzaProvider, &PizzaProvider::readyForUpdate, this, &PizzaBuilder::updateLivePizza);
 }
 
 
