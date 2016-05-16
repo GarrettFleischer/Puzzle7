@@ -25,7 +25,9 @@ Rectangle {
     Connections {
         target: PizzaBuilder
         onUpdateLivePizza: {
-            //livePizzaImage.source = "image://live/tomatoes"
+            livePizzaImage.source = ""
+            //livePizzaImage.opacity = 0.3
+            livePizzaImage.source = "image://live/pizza"
         }
     }
 
@@ -52,9 +54,10 @@ Rectangle {
         titleText:"Available Toppings"
         Component.onCompleted: {
             listData.append({"name":"Anchovies"})
-            listData.append({"name":"Tomatoes"})
+            listData.append({"name":"Pepperoni"})
             listData.append({"name":"Pineapple"})
-            listData.append({"name":"Your Choice"})
+            listData.append({"name":"Tomatoes"})
+            listData.append({"name":"Nuka-roni"})
         }
         onClickedItem: {
             PizzaBuilder.chooseTopping(listData.get(index).name)
@@ -80,13 +83,12 @@ Rectangle {
         }
 
         Component.onCompleted: {
-            listData.append({"name":"Pepperoni"})
-            PizzaBuilder.chooseTopping("Pepperoni")
+
         }
     }
 
     Component.onCompleted: {
-        livePizzaImage.source = "image://live/fish"; // Request the pixmap on load
+        livePizzaImage.source = "image://live/pizza"; // Request the pixmap on load
     }
 
 }

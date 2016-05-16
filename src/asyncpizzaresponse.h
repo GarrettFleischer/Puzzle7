@@ -30,18 +30,18 @@ class AsyncPizzaResponse : public QQuickImageResponse, public QRunnable
             return m_texture;
         }
 
-        // Create draw functions for each topping - Remember the pizza dimensions
-        void drawPepperoni(QPainter &painter)
+        void drawTopping(QPainter &painter, const QString &source)
         {
-            QImage  pepperonis(95,95,QImage::Format_RGB32);
-            pepperonis = (*m_loadedImages.value("pepperonis"));
+            QImage  img(95,95,QImage::Format_RGB32);
+            img = (*m_loadedImages.value(source));
+
             int x = 92;
             int y = 78;
             int columns_drawn(0);
-            painter.drawImage(80,175,pepperonis);
+            painter.drawImage(80,175,img);
             for(int index(0); index < 16; index++)
             {
-                painter.drawImage(x,y,pepperonis);
+                painter.drawImage(x,y,img);
                 x+= 80;
                 columns_drawn++;
                 if(columns_drawn >= 4)
@@ -51,11 +51,9 @@ class AsyncPizzaResponse : public QQuickImageResponse, public QRunnable
                     y+= 92;
                 }
             }
-            painter.drawImage(385,175,pepperonis);
-            painter.drawImage(385,245,pepperonis);
+            painter.drawImage(385,175,img);
+            painter.drawImage(385,245,img);
         }
-
-
 
         void run()
         {
@@ -65,9 +63,10 @@ class AsyncPizzaResponse : public QQuickImageResponse, public QRunnable
             // Create the painter
             QPainter  painter(&image);
 
-            // check toppings and draw all toppings in list
-            if(m_toppingsList.contains("Pepperoni"))
-                drawPepperoni(painter);
+            for(QString item : m_toppingsList)
+            {
+                drawTopping(painter, item);
+            }
 
             // ignore this stuff
             if (m_requestedSize.isValid() && (image.size() != m_requestedSize))
